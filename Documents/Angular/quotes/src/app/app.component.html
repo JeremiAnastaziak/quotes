@@ -5,13 +5,14 @@
   <button (click)="logout()" *ngIf="(user | async)?.uid">Logout</button>
 
   <input type="text" id="message" *ngIf="(user | async)?.uid" placeholder="Add new book" (keyup.enter)="addBook($event.target.value)" [(ngModel)]="bookVal" />
-  <div *ngIf="(user | async)?.uid" id="details-container">
+  <ul *ngIf="(user | async)?.uid" id="details-container" class="list">
   		<h2>Books</h2>
-      <p *ngFor="let book of books | async" (click)="goToBookQuotes(book)" >{{book.title}}</p>
-  </div>
-  <input *ngIf="activeBook" type="text" id="message" placeholder="Add new quote" (keyup.enter)="addQuote($event.target.value)" [(ngModel)]="quoteVal" />
-  <div *ngIf="activeBook" id="details-container">
+      <li *ngFor="let book of books | async" (click)="goToBookQuotes(book)" class="list-item" [ngClass]="{'selected': activeBook === book.title}">{{book.title}} <span class="delete" (click)="removeBook(book)">&#9747;</span> </li>
+  </ul>
+  <input *ngIf="activeBook && books" type="text" id="message" placeholder="Add new quote" (keyup.enter)="addQuote($event.target.value)" [(ngModel)]="quoteVal" />
+  <ul *ngIf="activeBook" id="details-container" class="list">
 		<h3>Quotes</h3>
-    <p *ngFor="let quote of quotes">{{quote}}</p>
-  </div>
+    <li *ngFor="let quote of quotes" class="list-item">{{quote}} <span class="delete" (click)="removeQuote(quote)">&#9747;</span></li>
+  </ul>
+  <image-loader></image-loader>
 </div>

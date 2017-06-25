@@ -1,0 +1,2 @@
+<input type="file" (change)="showImage($event)">
+<img *ngIf="imageUrl" #img [src]="imageUrl" alt="Uploaded image">
